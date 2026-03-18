@@ -19,21 +19,23 @@ spec:
         app: hello
     spec:
       containers:
-        - name: dashy
-          image: lissy93/dashy:latest
+        - name: hello
+          image: nginxdemos/hello:plain-text
           ports:
-            - containerPort: 8080
+            - containerPort: 80
           securityContext:
             allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            runAsUser: 101
             capabilities:
               drop: ["ALL"]
           resources:
             requests:
-              cpu: "100m"
-              memory: "128Mi"
+              cpu: "50m"
+              memory: "64Mi"
             limits:
-              cpu: "500m"
-              memory: "512Mi"
+              cpu: "250m"
+              memory: "128Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -45,7 +47,7 @@ spec:
     app: hello
   ports:
     - port: 80
-      targetPort: 8080
+      targetPort: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
