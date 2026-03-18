@@ -20,9 +20,9 @@ spec:
     spec:
       containers:
         - name: hello
-          image: nginxdemos/hello:plain-text
+          image: ghcr.io/luke18-r/homelab-api:latest
           ports:
-            - containerPort: 80
+            - containerPort: 8000
           resources:
             requests:
               cpu: "50m"
@@ -32,14 +32,14 @@ spec:
               memory: "128Mi"
           readinessProbe:
             httpGet:
-              path: /
-              port: 80
+              path: /readyz
+              port: 8000
             initialDelaySeconds: 3
             periodSeconds: 5
           livenessProbe:
             httpGet:
-              path: /
-              port: 80
+              path: /healthz
+              port: 8000
             initialDelaySeconds: 10
             periodSeconds: 10
 ---
@@ -53,7 +53,7 @@ spec:
     app: hello
   ports:
     - port: 80
-      targetPort: 80
+      targetPort: 8000
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
