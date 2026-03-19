@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: hello
-          image: ghcr.io/luke18-r/homelab-api:sha-abcdef1
+          image: ghcr.io/luke18-r/homelab-api@sha256:76168770d717c29b85933513e2bf274be95b612ca882df4b634e1f934a89b554
           ports:
             - containerPort: 8000
           resources:
