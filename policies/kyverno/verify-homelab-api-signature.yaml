@@ -25,3 +25,5 @@ spec:
                 - keyless:
                     subject: "pitigoilucian18@gmail.com"
                     issuer: "https://github.com/login/oauth"
+                    rekor:
+                      url: "https://rekor.sigstore.dev"
