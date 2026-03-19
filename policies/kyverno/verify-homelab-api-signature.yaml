@@ -1,0 +1,26 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: verify-homelab-api-signature
+spec:
+  validationFailureAction: Enforce
+  background: false
+  webhookTimeoutSeconds: 30
+  rules:
+    - name: verify-homelab-api-signature
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+      verifyImages:
+        - imageReferences:
+            - "ghcr.io/luke18-r/homelab-api*"
+          mutateDigest: true
+          required: true
+          verifyDigest: true
+          attestors:
+            - entries:
+                - keyless:
+                    subject: "pitigoilucian18@gmail.com"
+                    issuer: "https://github.com/login/oauth"
