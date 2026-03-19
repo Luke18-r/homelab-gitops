@@ -3,7 +3,6 @@ kind: ClusterPolicy
 metadata:
   name: verify-homelab-api-signature
 spec:
-  validationFailureAction: Enforce
   background: false
   webhookTimeoutSeconds: 30
   rules:
@@ -17,10 +16,12 @@ spec:
         - imageReferences:
             - "ghcr.io/luke18-r/homelab-api*"
           mutateDigest: true
-          required: true
           verifyDigest: true
+          required: true
+          failureAction: Enforce
           attestors:
-            - entries:
+            - count: 1
+              entries:
                 - keyless:
                     subject: "pitigoilucian18@gmail.com"
                     issuer: "https://github.com/login/oauth"
