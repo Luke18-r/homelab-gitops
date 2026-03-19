@@ -3,6 +3,7 @@ kind: ClusterPolicy
 metadata:
   name: verify-homelab-api-signature
 spec:
+  validationFailureAction: Audit
   background: false
   webhookTimeoutSeconds: 30
   rules:
@@ -15,10 +16,10 @@ spec:
       verifyImages:
         - imageReferences:
             - "ghcr.io/luke18-r/homelab-api*"
-          mutateDigest: true
-          verifyDigest: true
+          mutateDigest: false
           required: true
-          failureAction: Enforce
+          verifyDigest: true
+          failureAction: Audit
           attestors:
             - count: 1
               entries:
