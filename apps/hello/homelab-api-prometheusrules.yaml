@@ -1,0 +1,37 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: homelab-api-alerts
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  groups:
+    - name: homelab-api.rules
+      rules:
+        - alert: HomelabApiTargetDown
+          expr: up{job="hello"} == 0
+          for: 2m
+          labels:
+            severity: warning
+          annotations:
+            summary: "homelab-api target is down"
+            description: "Prometheus cannot scrape the homelab-api target for 2 minutes."
+
+        - alert: HomelabApiPodNotReady
+          expr: kube_pod_status_ready{namespace="hello", condition="true"} == 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "A hello namespace pod is not ready"
+            description: "A pod in namespace hello has been unready for 5 minutes."
+
+        - alert: HomelabApiContainerRestarts
+          expr: increase(kube_pod_container_status_restarts_total{namespace="hello"}[15m]) > 0
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "A hello namespace container restarted"
+            description: "A container in namespace hello restarted in the last 15 minutes."
