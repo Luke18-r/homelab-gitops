@@ -48,6 +48,8 @@ kind: Service
 metadata:
   name: hello
   namespace: hello
+  labels:
+    app: hello
 spec:
   selector:
     app: hello
