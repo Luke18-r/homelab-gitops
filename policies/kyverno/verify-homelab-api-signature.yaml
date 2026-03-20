@@ -24,7 +24,7 @@ spec:
             - count: 1
               entries:
                 - keyless:
-                    subject: "pitigoilucian18@gmail.com"
-                    issuer: "https://github.com/login/oauth"
+                    subject: "https://github.com/luke18-r/homelab-api/.github/workflows/build-sign-push.yml@refs/heads/main"
+                    issuer: "https://token.actions.githubusercontent.com"
                     rekor:
                       url: "https://rekor.sigstore.dev"
