@@ -3,7 +3,7 @@ kind: ClusterPolicy
 metadata:
   name: verify-homelab-api-signature
 spec:
-  validationFailureAction: Audit
+  validationFailureAction: Enforce
   background: false
   webhookTimeoutSeconds: 30
   rules:
@@ -19,7 +19,7 @@ spec:
           mutateDigest: false
           required: true
           verifyDigest: true
-          failureAction: Audit
+          failureAction: Enforce
           attestors:
             - count: 1
               entries:
