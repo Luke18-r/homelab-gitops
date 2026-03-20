@@ -3,6 +3,8 @@ kind: ServiceMonitor
 metadata:
   name: homelab-api
   namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
 spec:
   namespaceSelector:
     matchNames:
