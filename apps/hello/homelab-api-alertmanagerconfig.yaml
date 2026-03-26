@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1beta1
+kind: AlertmanagerConfig
+metadata:
+  name: homelab-api
+  namespace: monitoring
+  labels:
+    release: kube-prometheus-stack
+spec:
+  route:
+    receiver: n8n-webhook
+    groupBy:
+      - alertname
+      - namespace
+      - severity
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 2h
+    matchers:
+      - name: severity
+        value: warning
+  receivers:
+    - name: n8n-webhook
+      webhookConfigs:
+        - url: "http://192.168.1.150:5680/webhook/alertmanager"
+          sendResolved: true
